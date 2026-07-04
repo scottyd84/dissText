@@ -1,5 +1,10 @@
 # dissText
 
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-3.x-000000?logo=flask&logoColor=white)
+![Frontend](https://img.shields.io/badge/frontend-vanilla%20JS-F7DF1E?logo=javascript&logoColor=black)
+![Dependencies](https://img.shields.io/badge/dependencies-just%20flask-4caf7d)
+
 An online writing app that punishes hesitation. Pick a target — a number of
 minutes or a number of words — then start writing. As long as you keep typing
 you're safe. **Stop typing for more than 5 seconds and your words fade out and
@@ -7,6 +12,8 @@ are wiped.** Reach your target to survive, at which point your text unlocks and
 you can copy it or download it as a `.txt`.
 
 Inspired by *The Most Dangerous Writing App*.
+
+![dissText setup screen](docs/screenshot.png)
 
 ## How it works
 
