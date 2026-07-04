@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>dissText — write or lose it</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <!-- Config injected from Flask so the game constants live in app.py -->
+  <script>
+    window.DISS_CONFIG = {
+      graceSeconds: {{ grace_seconds }},
+      fadeSeconds: {{ fade_seconds }},
+    };
+  </script>
+
+  <!-- ============ SETUP SCREEN ============ -->
+  <section id="setup" class="screen active">
+    <div class="setup-inner">
+      <h1>dissText</h1>
+      <p class="tagline">Keep typing, or lose everything.</p>
+      <p class="rules">
+        Pick a target and start writing. If you stop typing for more than
+        <strong>{{ grace_seconds }} seconds</strong>, your words fade out and are
+        <strong>gone</strong>. Reach your target to unlock and save your work.
+      </p>
+
+      <div class="mode-toggle" role="tablist">
+        <button id="mode-time" class="mode-btn active" type="button">Time</button>
+        <button id="mode-words" class="mode-btn" type="button">Words</button>
+      </div>
+
+      <div id="presets-time" class="presets">
+        {% for m in time_presets %}
+        <button class="preset-btn" data-value="{{ m }}" type="button">{{ m }} min</button>
+        {% endfor %}
+      </div>
+
+      <div id="presets-words" class="presets hidden">
+        {% for w in word_presets %}
+        <button class="preset-btn" data-value="{{ w }}" type="button">{{ w }} words</button>
+        {% endfor %}
+      </div>
+
+      <div class="custom-row">
+        <label>Custom:
+          <input id="custom-value" type="number" min="1" step="1" placeholder="amount">
+        </label>
+        <span id="custom-unit">minutes</span>
+      </div>
+
+      <button id="start-btn" class="start-btn" type="button">Start writing</button>
+      <p id="setup-hint" class="hint"></p>
+    </div>
+  </section>
+
+  <!-- ============ WRITING SCREEN ============ -->
+  <section id="writing" class="screen">
+    <div class="statusbar">
+      <span id="goal-progress" class="goal-progress">—</span>
+      <div class="grace-track" aria-label="grace remaining">
+        <div id="grace-meter" class="grace-meter"></div>
+      </div>
+    </div>
+    <textarea id="editor" spellcheck="true" autocomplete="off"
+              placeholder="Begin. Don't stop."></textarea>
+  </section>
+
+  <!-- ============ RESULT OVERLAYS ============ -->
+  <div id="overlay-pass" class="overlay">
+    <div class="overlay-card">
+      <h2>You survived.</h2>
+      <p id="pass-summary" class="overlay-sub"></p>
+      <div class="overlay-actions">
+        <button id="copy-btn" class="start-btn" type="button">Copy text</button>
+        <button id="download-btn" class="start-btn secondary" type="button">Download .txt</button>
+      </div>
+      <button id="pass-restart" class="link-btn" type="button">Write another</button>
+    </div>
+  </div>
+
+  <div id="overlay-fail" class="overlay">
+    <div class="overlay-card fail">
+      <h2>Your words are gone.</h2>
+      <p class="overlay-sub">You stopped typing. There is no recovery.</p>
+      <button id="fail-restart" class="start-btn" type="button">Try again</button>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/writer.js') }}"></script>
+</body>
+</html>
